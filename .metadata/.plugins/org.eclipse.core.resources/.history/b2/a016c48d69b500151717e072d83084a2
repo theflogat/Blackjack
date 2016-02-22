@@ -1,0 +1,14 @@
+package isn.users;
+
+import java.util.ArrayList;
+
+import isn.cards.Card;
+
+public abstract class Player extends User{
+	
+	
+	public Player() {}
+	
+	
+
+}

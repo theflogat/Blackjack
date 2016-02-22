@@ -1,0 +1,11 @@
+package isn.cards.blackjack;
+
+import java.util.Random;
+
+public class BlackJack {
+	
+	public BlackJack(Random rand) {
+		
+	}
+
+}

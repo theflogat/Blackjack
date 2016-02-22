@@ -1,0 +1,15 @@
+package isn.users;
+
+import java.util.ArrayList;
+
+import isn.cards.Card;
+
+public class Player {
+	
+	ArrayList<Card> cards = new ArrayList<Card>();
+	
+	public Player() {
+		// TODO Auto-generated constructor stub
+	}
+
+}

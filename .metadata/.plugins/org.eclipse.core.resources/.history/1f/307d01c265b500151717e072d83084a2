@@ -1,0 +1,20 @@
+package isn.cards;
+
+public class Card {
+	
+	public enum Type{
+		SPADE("Pique"),
+		HEART("Coeur"),
+		DIAMONDS("Carreau"),
+		CLUBS("Trèfle");
+		
+		String name;
+		
+		private Type(String name) {
+			this.name = name;
+		}
+	}
+	
+	
+	
+}

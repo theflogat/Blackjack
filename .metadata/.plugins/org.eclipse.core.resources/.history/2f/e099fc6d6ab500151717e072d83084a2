@@ -1,0 +1,3 @@
+package isn.users;
+
+public abstract class Player extends User{}

@@ -1,0 +1,31 @@
+package isn.cards.blackjack;
+
+import java.util.Random;
+
+import isn.cards.Deck;
+import isn.users.Computer;
+import isn.users.Player;
+
+public class BlackJack {
+	
+	public Deck deck;
+	public Player player;
+	public Computer computer;
+	public boolean isActive;
+	
+	public BlackJack(Random rand) {
+		deck = new Deck(rand);
+		isActive = true;
+	}
+	
+	public void play(){
+		
+	}
+	
+	public void drawCards(){
+		player.clearHand();
+		computer.clearHand();
+		player.addCard(deck.d);
+	}
+
+}

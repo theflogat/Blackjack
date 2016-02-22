@@ -1,0 +1,45 @@
+package isn.cards;
+
+import java.util.ArrayList;
+import java.util.Random;
+
+public class Card {
+	
+	public enum Type{
+		SPADE("Pique"),
+		HEART("Coeur"),
+		DIAMONDS("Carreau"),
+		CLUBS("Trèfle");
+		
+		String name;
+		
+		private Type(String name) {
+			this.name = name;
+		}
+	}
+	
+	private int number;
+	private Type type;
+	
+	public Card(int number, Type type) throws Exception {
+		if(number<0 || number>12){
+			throw new Exception();
+		}
+		
+		this.number = number;
+		this.type = type;
+	}
+	
+	public Card(Random rand, ArrayList exclude){
+		
+	}
+	
+	public int getNumber() {
+		return number;
+	}
+	
+	public Type getType() {
+		return type;
+	}
+	
+}

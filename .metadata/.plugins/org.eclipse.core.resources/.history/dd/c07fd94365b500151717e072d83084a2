@@ -1,0 +1,9 @@
+package isn.cards.blackjack;
+
+public class BlackJack {
+	
+	public BlackJack() {
+		
+	}
+
+}

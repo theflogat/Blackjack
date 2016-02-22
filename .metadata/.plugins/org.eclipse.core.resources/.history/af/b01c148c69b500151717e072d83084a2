@@ -1,0 +1,7 @@
+package isn.users;
+
+public abstract class User {
+	
+	public abstract void playTurn();
+
+}
