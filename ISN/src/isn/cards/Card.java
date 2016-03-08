@@ -79,7 +79,7 @@ public class Card {
 	}
 	
 	//Donne le score de la carte au BJ
-	public getScore(int currentScore){
+	public void getScore(int currentScore){
 		
 	}
 	
@@ -89,7 +89,7 @@ public class Card {
 		return obj instanceof Card && ((Card)obj).number==number && ((Card)obj).type.ordinal()==type.ordinal();
 	}
 	
-	//Donne le lien vers l'image représentée par la carte
+	//Donne le lien vers l'image representee par la carte
 	public File getImg() {
 		return new File("./" + number + ".png");
 	}

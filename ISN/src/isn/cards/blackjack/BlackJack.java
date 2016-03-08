@@ -14,6 +14,7 @@ public class BlackJack {
 	public User player;
 	public Computer computer;
 	public boolean isActive;
+	public boolean canPlayerSplit;
 	
 	public int turn = 1;
 	public int maxTurn = 3;
@@ -25,14 +26,22 @@ public class BlackJack {
 
 			@Override
 			public void playTurn(Object... data) {
-				// TODO Auto-generated method stub
+				if(player.handsplit.cards.isEmpty() && player.hand.canSplit()){
+					canPlayerSplit = true;
+				}
+				
+				//TODO Move to mouse listener event
 			}
 		};
 		computer = new Computer() {
 
 			@Override
 			public void playTurn(Object... data) {
-				// TODO Auto-generated method stub
+				data[0] = false;
+				
+				if(player.hand.getScore() > hand.getScore()){
+					data[0] = true;
+				}
 			}
 		};
 	}
