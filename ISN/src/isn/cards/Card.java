@@ -2,8 +2,10 @@ package isn.cards;
 
 import java.io.File;
 
+//Classe qui est une carte
 public class Card {
 	
+	//Le type de la carte
 	public enum Type{
 		SPADE("Pique"),
 		HEART("Coeur"),
@@ -30,9 +32,11 @@ public class Card {
 		}
 	}
 	
+	//La carte; 11 est le valet, 12 la dame et 13 le roi
 	private int number;
 	private Type type;
 	
+	//Crée une carte à partir du nombre et du type
 	public Card(int number, Type type) throws Exception {
 		if(number<0 || number>12){
 			throw new Exception("Id out of range (0-12)");
@@ -74,11 +78,18 @@ public class Card {
 		return type;
 	}
 	
+	//Donne le score de la carte au BJ
+	public getScore(int currentScore){
+		
+	}
+	
+	//Vérifie si deux cartes sont égales
 	@Override
 	public boolean equals(Object obj) {
 		return obj instanceof Card && ((Card)obj).number==number && ((Card)obj).type.ordinal()==type.ordinal();
 	}
-
+	
+	//Donne le lien vers l'image représentée par la carte
 	public File getImg() {
 		return new File("./" + number + ".png");
 	}

@@ -8,26 +8,31 @@ import java.net.URL;
 
 import javax.swing.JFrame;
 
+//Classe qui permet l'affichage
 public class Window {
 
-	static String imageFileName = "test.jpg";
+	static String background = "test.jpg";
 
 	public static void run(){
-		JFrame f = new JFrame("ImageDrawing");
+		//Crée une fenêtre
+		JFrame f = new JFrame("BlackJack");
 		f.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				//    System.exit(0);
 			}
 		});
+		//Charger l'URL de l'imagine
 		URL imageSrc = null;
 		try {
-			imageSrc = ((new File("C:/Users/flo/Documents/Java/ISN/ISN/src/" + imageFileName)).toURI()).toURL();
-		} catch (MalformedURLException e) {
-		}
+			imageSrc = ((new File("C:/Users/flo/Documents/Java/ISN/ISN/src/" + background)).toURI()).toURL();
+		} catch (MalformedURLException e) {}
+		//Créer un objet qui stocke la position
 		ImageDrawingApplet id = new ImageDrawingApplet(imageSrc);
 		id.buildUI();
+		//Ajouter id à la fenêtre
 		f.add("Center", id);
 		f.pack();
+		//Rend la fenêtre visible
 		f.setVisible(true);
 	}
 }

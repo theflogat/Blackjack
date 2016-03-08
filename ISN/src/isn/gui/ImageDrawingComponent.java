@@ -12,9 +12,11 @@ import javax.imageio.ImageIO;
 
 import isn.cards.Card;
 
+//Classe qui contient l'image
 @SuppressWarnings("serial")
 class ImageDrawingComponent extends Component {
-
+	
+	//TODO enlever
 	static String descs[] = {
 			"Simple Copy",
 	};
@@ -22,7 +24,8 @@ class ImageDrawingComponent extends Component {
 	private BufferedImage bi;
 	int w, h;
 	String img;
-
+	
+	//Sauvegarde l'image
 	public ImageDrawingComponent(URL imageSrc) {
 		try {
 			bi = ImageIO.read(imageSrc);
@@ -38,12 +41,14 @@ class ImageDrawingComponent extends Component {
 			System.out.println("Image could not be read");
 		}
 	}
-
+	
+	//Donne les dimensions pour la remise à l'échelle de l'image; par défaut la taille de l'écran
 	@Override
 	public Dimension getPreferredSize() {
 		return new Dimension(w, h);
 	}
 	
+	//Peint l'image à l'écran
 	public void paint(Graphics g) {
 		BufferedImage bi2 = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
 		Graphics big = bi2.getGraphics();
@@ -53,7 +58,8 @@ class ImageDrawingComponent extends Component {
 
 		g.drawImage(bi2, 0, 0, null);
 	}
-
+	
+	//Peint les cartes
 	public void preDrawCards(ArrayList<Card> cards, Graphics big){
 		if(!cards.isEmpty()){
 			for(int i=0;i<cards.size();i++){
