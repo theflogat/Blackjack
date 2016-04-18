@@ -5,37 +5,54 @@ import java.util.ArrayList;
 import isn.cards.Card;
 import isn.cards.blackjack.BJHand;
 
-//Classe qui relie les differents utilisateurs
 public abstract class User {
 	
+	/**
+	 * La main normal
+	 */
 	public BJHand hand = new BJHand();
+	/**
+	 * La main en split
+	 */
 	public BJHand handsplit = new BJHand();
 	
-	//Ajouter une carte de la main
+	/**
+	 * @param toAdd
+	 * 
+	 * Ajouter la carte toAdd a' la main
+	 */
 	public void addCard(Card toAdd){
 		hand.cards.add(toAdd);
 	}
 	
-	//Jeter la main
+	/**
+	 * Jete la main
+	 */
 	public void clearHand(){
 		hand.cards.clear();
 		handsplit.cards.clear();
 	}
 	
-	//Enleve une carte de la main
+	/**
+	 * @param toRemove
+	 * 
+	 * Enleve la carte toRemove de la main
+	 */
 	public void remove(Card toRemove){
 		hand.cards.remove(toRemove);
 	}
 	
+	/**
+	 * Effectuer un split
+	 */
 	public void split(){
 		handsplit.cards.add(hand.cards.get(1));
 		hand.cards.remove(1);
 	}
 	
-	//Jouer le tour
-	public abstract void playTurn(Object... data);
-	
-	//Renvoie la main
+	/**
+	 * @return La main
+	 */
 	public ArrayList<Card> getCards() {
 		return hand.cards;
 	}

@@ -1,17 +1,22 @@
 package isn.cards;
 
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.Collections;
 
 import isn.cards.Card.Type;
+import isn.cards.blackjack.BlackJack;
 
 //Classe qui contient le jeu de carte
 public class Deck {
 
-	//Toutes les cartes triées
+	/**
+	 * Liste des cartes triees
+	 */
 	public static final ArrayList<Card> allCards;
 	
-	//Créer la liste de toutes les cartes triées
+	/**
+	 * Cree la liste de toutes les cartes triees
+	 */
 	static {
 		ArrayList<Card> cards = new ArrayList<Card>();
 		try{
@@ -27,35 +32,43 @@ public class Deck {
 
 		allCards = cards;
 	}
-	
-	//Les cartes restantes dans le jeu
-	public ArrayList<Card> cards;
-	
-	//Construit un packet à partir d'un objet aléatoire
-	public Deck(Random rand) {
-		drawCards(rand);
-	}
-	
-	// Melange les cartes et les met dans un packet
-	public void drawCards(Random rand){
-		ArrayList<Card> unusedCards = allCards;
-		cards = new ArrayList<Card>();
 
-		while(!unusedCards.isEmpty()){
-			int drawn = rand.nextInt(unusedCards.size());
-			cards.add(unusedCards.get(drawn));
-			unusedCards.remove(drawn);
+	/**
+	 * Les cartes du packet
+	 */
+	public ArrayList<Card> cards;
+	/**
+	 * Le jeu actuel de BlackJack
+	 */
+	public BlackJack bj;
+
+	/**
+	 * Cree un jeu de carte
+	 */
+	public Deck(BlackJack bj) {
+		this.bj = bj;
+		drawCards(null);
+	}
+
+	/**
+	 * Melange les cartes et les met dans le packet
+	 */
+	public void drawCards(ArrayList<Card> cardsAlreadyInPlay){
+		cards = new ArrayList<Card>(allCards);
+		Collections.shuffle(cards);
+		if(cardsAlreadyInPlay!=null){
+			cards.removeAll(cardsAlreadyInPlay);
 		}
 	}
-	
+
 	/**
-	 * Add cards already in play to cards drawing
 	 * @return
+	 * Tire la premiere carte du packet
 	 */
-	//Tire la première carte du packet
 	public Card draw(){
 		if(cards.isEmpty()){
-			return null;
+			drawCards(bj.getCardsAlreadyInPlay());
+			return draw();
 		}
 		Card c = cards.get(0);
 		cards.remove(0);

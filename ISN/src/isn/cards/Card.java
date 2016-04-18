@@ -1,23 +1,38 @@
 package isn.cards;
 
-import java.io.File;
-
 //Classe qui est une carte
 public class Card {
 	
-	//Le type de la carte
+	/**
+	 * Le type de la carte
+	 *
+	 */
 	public enum Type{
 		SPADE("Pique"),
 		HEART("Coeur"),
 		DIAMONDS("Carreau"),
 		CLUBS("Trefle");
 		
+		/**
+		 * Nom de la carte
+		 */
 		String name;
 		
+		/**
+		 * 
+		 * @param name
+		 * Constructeur de type
+		 */
 		private Type(String name) {
 			this.name = name;
 		}
 		
+		/**
+		 * 
+		 * @param id
+		 * @return le type en fonction de l'id
+		 * @throws Exception
+		 */
 		public static Type getType(int id) throws Exception{
 			for(Type t:values()){
 				if(t.ordinal()==id){
@@ -27,16 +42,28 @@ public class Card {
 			throw new Exception("Id out of range (0-3)");
 		}
 		
-		public File getImg(){
-			return new File("./" + name.toLowerCase() + "png");
+		//toString() retourne name
+		@Override
+		public String toString() {
+			return name;
 		}
 	}
 	
-	//La carte; 11 est le valet, 12 la dame et 13 le roi
+	/**
+	 * Le nombre de la carte;0 est l'as;...;10 le valet;11 la dame;12 le roi
+	 */
 	private int number;
+	/**
+	 * Le type de carte
+	 */
 	private Type type;
 	
-	//Crée une carte à partir du nombre et du type
+	/**
+	 * @param number
+	 * @param type
+	 * @throws Exception
+	 * Cree une carte a' partir du nombre et du type
+	 */
 	public Card(int number, Type type) throws Exception {
 		if(number<0 || number>12){
 			throw new Exception("Id out of range (0-12)");
@@ -46,52 +73,37 @@ public class Card {
 		this.type = type;
 	}
 	
-//	public Card(Random rand, ArrayList<Card> whereToAdd) throws Exception{
-//		if(whereToAdd.isEmpty()){
-//			whereToAdd.add(new Card(rand.nextInt(13), Type.getType(rand.nextInt(4))));
-//		}else{
-//			boolean searchC = true;
-//			while(searchC){
-//				searchC = false;
-//				Card toAdd = new Card(rand.nextInt(13), Type.getType(rand.nextInt(4)));
-//				
-//				Iterator<Card> it = whereToAdd.iterator();
-//				while(it.hasNext()){
-//					if(it.next().equals(toAdd)){
-//						searchC = true;
-//						break;
-//					}
-//				}
-//				
-//				if(!searchC){
-//					whereToAdd.add(toAdd);
-//				}
-//			}
-//		}
-//	}
-	
+	/**
+	 * 
+	 * @return le nombre de la carte
+	 */
 	public int getNumber() {
 		return number;
 	}
 	
+	/**
+	 * 
+	 * @return le type de la carte
+	 */
 	public Type getType() {
 		return type;
 	}
 	
-	//Donne le score de la carte au BJ
-	public void getScore(int currentScore){
-		
-	}
-	
-	//Vérifie si deux cartes sont égales
+	/**
+	 * @return Est-ce que les deux cartes sont egales
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		return obj instanceof Card && ((Card)obj).number==number && ((Card)obj).type.ordinal()==type.ordinal();
 	}
 	
-	//Donne le lien vers l'image representee par la carte
-	public File getImg() {
-		return new File("./" + number + ".png");
+	/**
+	 * 
+	 * @return une copy ne pointant pas au m�me objet
+	 * @throws Exception
+	 */
+	public Card copy() throws Exception {
+		return new Card(getNumber(), getType());
 	}
 	
 }
