@@ -1,14 +1,22 @@
 package isn.cards;
 
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.Collections;
 
+import isn.Start;
 import isn.cards.Card.Type;
 
+//Classe qui contient le jeu de carte
 public class Deck {
 
+	/**
+	 * Liste des cartes triees
+	 */
 	public static final ArrayList<Card> allCards;
 
+	/**
+	 * Cree la liste de toutes les cartes triees
+	 */
 	static {
 		ArrayList<Card> cards = new ArrayList<Card>();
 		try{
@@ -25,30 +33,37 @@ public class Deck {
 		allCards = cards;
 	}
 
+	/**
+	 * Les cartes du packet
+	 */
 	public ArrayList<Card> cards;
 
-	public Deck(Random rand) {
-		drawCards(rand);
+	/**
+	 * Cree un jeu de carte
+	 */
+	public Deck() {
+		drawCards(null);
 	}
 
-	public void drawCards(Random rand){
-		ArrayList<Card> unusedCards = allCards;
-		cards = new ArrayList<Card>();
-
-		while(!unusedCards.isEmpty()){
-			int drawn = rand.nextInt(unusedCards.size());
-			cards.add(unusedCards.get(drawn));
-			unusedCards.remove(drawn);
+	/**
+	 * Melange les cartes et les met dans le packet
+	 */
+	public void drawCards(ArrayList<Card> cardsAlreadyInPlay){
+		cards = new ArrayList<Card>(allCards);
+		Collections.shuffle(cards);
+		if(cardsAlreadyInPlay!=null){
+			cards.removeAll(cardsAlreadyInPlay);
 		}
 	}
-	
+
 	/**
-	 * Add cards already in play to cards drawing
-	 * @return
+	 * 
+	 * Tire la premiere carte du packet
 	 */
 	public Card draw(){
 		if(cards.isEmpty()){
-			return null;
+			drawCards(Start.getBj().getCardsAlreadyInPlay());
+			return draw();
 		}
 		Card c = cards.get(0);
 		cards.remove(0);
