@@ -3,8 +3,8 @@ package isn.cards;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import isn.Start;
 import isn.cards.Card.Type;
-import isn.cards.blackjack.BlackJack;
 
 //Classe qui contient le jeu de carte
 public class Deck {
@@ -13,7 +13,7 @@ public class Deck {
 	 * Liste des cartes triees
 	 */
 	public static final ArrayList<Card> allCards;
-	
+
 	/**
 	 * Cree la liste de toutes les cartes triees
 	 */
@@ -37,16 +37,11 @@ public class Deck {
 	 * Les cartes du packet
 	 */
 	public ArrayList<Card> cards;
-	/**
-	 * Le jeu actuel de BlackJack
-	 */
-	public BlackJack bj;
 
 	/**
 	 * Cree un jeu de carte
 	 */
-	public Deck(BlackJack bj) {
-		this.bj = bj;
+	public Deck() {
 		drawCards(null);
 	}
 
@@ -62,12 +57,12 @@ public class Deck {
 	}
 
 	/**
-	 * @return
+	 * 
 	 * Tire la premiere carte du packet
 	 */
 	public Card draw(){
 		if(cards.isEmpty()){
-			drawCards(bj.getCardsAlreadyInPlay());
+			drawCards(Start.getBj().getCardsAlreadyInPlay());
 			return draw();
 		}
 		Card c = cards.get(0);

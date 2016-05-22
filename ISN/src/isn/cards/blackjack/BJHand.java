@@ -6,6 +6,9 @@ import isn.cards.Card;
 
 public class BJHand {
 
+	/**
+	 * La main
+	 */
 	public ArrayList<Card> cards = new ArrayList<Card>();
 
 	/**

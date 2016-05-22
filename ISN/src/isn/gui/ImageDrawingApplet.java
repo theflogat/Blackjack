@@ -14,7 +14,6 @@ import isn.cards.blackjack.BlackJack;
 @SuppressWarnings("serial")
 public class ImageDrawingApplet extends JApplet {
 
-	private BlackJack bj;
 	private URL backgroung;
 	private URL[] numbers;
 	private URL[] types;
@@ -34,7 +33,7 @@ public class ImageDrawingApplet extends JApplet {
 	 * @param buttons
 	 * @param endDisplay
 	 */
-	public ImageDrawingApplet (BlackJack bj, URL backgroung, URL[] numbers, URL[] types, URL cardBack, URL whiteCard, URL[] buttons, URL[] endDisplay) {
+	public ImageDrawingApplet (URL backgroung, URL[] numbers, URL[] types, URL cardBack, URL whiteCard, URL[] buttons, URL[] endDisplay) {
 		this.backgroung = backgroung;
 		this.numbers = numbers;
 		this.types = types;
@@ -42,7 +41,6 @@ public class ImageDrawingApplet extends JApplet {
 		this.whiteCard = whiteCard;
 		this.buttons = buttons;
 		this.endDisplay = endDisplay;
-		this.bj = bj;
 	}
 
 	/**
@@ -51,7 +49,7 @@ public class ImageDrawingApplet extends JApplet {
 	@Override
 	public void init() {
 		//Cree l'ImageDrawingComponent et l'ajoute au centre de l'applet
-		final ImageDrawingComponent id = new ImageDrawingComponent(bj, backgroung, numbers, types, cardBack, whiteCard, buttons, endDisplay);
+		final ImageDrawingComponent id = new ImageDrawingComponent(backgroung, numbers, types, cardBack, whiteCard, buttons, endDisplay);
 		add("Center", id);
 
 		//Ajouter une implementation silencieuse d'un objet MouseListener
@@ -63,61 +61,105 @@ public class ImageDrawingApplet extends JApplet {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
+				BlackJack bj = Start.getBj();
 				if(!bj.cooldown){
 					if(bj.isActive){
-						//Click on "Quit"
-						if(ImageDrawingComponent.coords[11].within(e.getX(), e.getY())){
+						//Clic sur Quitter
+						if(ImageDrawingComponent.bCoords[11].within(e.getX(), e.getY())){
 							Start.newBlackJack();
 							repaint();
 						}
 						if(bj.canPlayerWage){
-							//Click on "Save"
-							if(ImageDrawingComponent.coords[10].within(e.getX(), e.getY())){
+							//Clic sur Sauver
+							if(ImageDrawingComponent.bCoords[10].within(e.getX(), e.getY())){
 								bj.save(Start.getSaveFilePath());
 								repaint();
 							}
-							//Click on "Bet"
-							if(ImageDrawingComponent.coords[7].within(e.getX(), e.getY())){
+							//Clic sur Parier
+							if(ImageDrawingComponent.bCoords[7].within(e.getX(), e.getY())){
 								bj.canPlayerWage = false;
 								repaint();
 							}
-							//Remove coin
-							if(ImageDrawingComponent.coords[8].within(e.getX(), e.getY())){
+
+							//Enlever jeton
+							if(ImageDrawingComponent.bCoords[8].within(e.getX(), e.getY())){
 								bj.wage--;
 								if(bj.wage<0){
 									bj.wage = 0;
 								}
 								repaint();
 							}
-							//Add coin
-							if(ImageDrawingComponent.coords[9].within(e.getX(), e.getY())){
+
+							//Enlever 10 jetons
+							if(ImageDrawingComponent.bCoords[12].within(e.getX(), e.getY())){
+								bj.wage -= 10;
+								if(bj.wage<0){
+									bj.wage = 0;
+								}
+								repaint();
+							}
+
+							//Ajouter jeton
+							if(ImageDrawingComponent.bCoords[9].within(e.getX(), e.getY())){
 								bj.wage++;
 								if(bj.wage>Math.min(100, bj.player.getCoins())){
 									bj.wage = Math.min(100, bj.player.getCoins());
 								}
 								repaint();
 							}
+
+							//Ajouter 10 jetons
+							if(ImageDrawingComponent.bCoords[13].within(e.getX(), e.getY())){
+								bj.wage += 10;
+								if(bj.wage>Math.min(100, bj.player.getCoins())){
+									bj.wage = Math.min(100, bj.player.getCoins());
+								}
+								repaint();
+							}
 						}else{
-							//Click on Draw
-							if(ImageDrawingComponent.coords[7].within(e.getX(), e.getY())){
-								bj.drawPlayerCard();
+							//Clic sur Draw
+							if(ImageDrawingComponent.bCoords[7].within(e.getX(), e.getY())){
+								bj.drawPlayerCard(bj.player.currHand);
 								repaint();
 							}
 
-							//Click on stop
-							if(ImageDrawingComponent.coords[10].within(e.getX(), e.getY())){
+							//Clic sur Stop
+							if(ImageDrawingComponent.bCoords[10].within(e.getX(), e.getY())){
 								bj.playerNext();
+								repaint();
+							}
+
+							//Clic sur Assurance
+							if(ImageDrawingComponent.bCoords[14].within(e.getX(), e.getY())){
+								if(bj.computer.getAllCards().get(0).getNumber()==0 && !bj.player.insurance){
+									if(bj.player.getCoins()>bj.wage*3/2){
+										bj.player.insurance = true;
+										bj.player.addCoins(-bj.wage/2);
+										repaint();
+									}
+								}
+							}
+
+							//Clic sur Split
+							if(ImageDrawingComponent.bCoords[15].within(e.getX(), e.getY()) && bj.player.canSplit(bj.wage)){
+								bj.split();
+								repaint();
+							}
+
+							//Clic sur Double
+							if(ImageDrawingComponent.bCoords[16].within(e.getX(), e.getY()) && bj.player.getCoins()>=2*bj.wage){
+								bj.cDouble();
 								repaint();
 							}
 						}
 					}else{
-						//Click on load
-						if((new File(Start.getSaveFilePath())).exists() && ImageDrawingComponent.coords[7].within(e.getX(), e.getY())){
+						//Clic sur Charger
+						if((new File(Start.getSaveFilePath())).exists() && ImageDrawingComponent.bCoords[7].within(e.getX(), e.getY())){
 							bj.load(Start.getSaveFilePath());
 							repaint();
 						}
-						//Click on play
-						if(ImageDrawingComponent.coords[6].within(e.getX(), e.getY())){
+						//Clic sur Jouer
+						if(ImageDrawingComponent.bCoords[6].within(e.getX(), e.getY())){
 							bj.start();
 							repaint();
 						}
@@ -133,7 +175,7 @@ public class ImageDrawingApplet extends JApplet {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {}
-			
+
 		});
 	}
 }

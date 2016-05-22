@@ -7,18 +7,18 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 
 public class GraphicNumber {
-	
+
 	/**
 	 * URLs des chiffres
 	 */
 	private static URL[] nums = new URL[10];
-	
+
 	/**
 	 * Largeur, hauteur des images
 	 */
 	public static int nw = 64;
 	public static int nh = 64;
-	
+
 	/**
 	 * Initialisation des URLs
 	 */
@@ -27,7 +27,7 @@ public class GraphicNumber {
 			nums[i] = GraphicNumber.class.getResource("numbers/t" + i + ".png");
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param big
@@ -60,7 +60,7 @@ public class GraphicNumber {
 			big.drawImage(getImage(u), startx + 2*nw, cy, null);
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param big
@@ -76,7 +76,7 @@ public class GraphicNumber {
 		int c = (num%1000)/100;
 		int d = (num%100)/10;
 		int u = (num%10)/1;
-		
+
 		if(dm==0){
 			if(m==0){
 				if(c==0){
@@ -105,7 +105,7 @@ public class GraphicNumber {
 			big.drawImage(getImage(u), startx + 4*nw, y, null);
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param i
